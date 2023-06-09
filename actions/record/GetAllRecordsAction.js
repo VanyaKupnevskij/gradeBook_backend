@@ -17,7 +17,11 @@ class GetAllRecordsAction extends IAction {
   }
 
   run = async (req, res) => {
-    const items = await this.service.getAll();
+    this.checkRole(req.user.role);
+
+    const { id, role } = req.user;
+
+    const items = await this.service.getAll(id, role);
 
     return res.json(items);
   };

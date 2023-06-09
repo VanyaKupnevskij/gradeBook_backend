@@ -37,8 +37,20 @@ class RecordService extends BaseService {
     return updatedItem;
   };
 
-  getAll = async () => {
-    const items = await this.repository.getAll();
+  getAll = async (id, role) => {
+    let items = null;
+
+    switch (role) {
+      case 'admin':
+        items = await this.repository.getAll();
+        break;
+      case 'teacher':
+        items = await this.repository.getAll({ from: id });
+        break;
+      case 'student':
+        items = await this.repository.getAll({ to: id });
+        break;
+    }
 
     return items;
   };

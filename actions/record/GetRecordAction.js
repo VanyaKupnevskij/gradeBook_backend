@@ -17,6 +17,8 @@ class GetRecordAction extends IAction {
   }
 
   run = async (req, res) => {
+    this.checkRole(req.user.role);
+
     const { id } = this.validate(req.params);
 
     const item = await this.service.getById(id);

@@ -18,6 +18,8 @@ class UpdateRecordAction extends IAction {
   }
 
   run = async (req, res) => {
+    this.checkRole(req.user.role);
+
     let validData = this.validate({ ...req.body, id: req.params.id });
 
     const updatedItem = await this.service.update(validData);

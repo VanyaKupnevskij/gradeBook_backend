@@ -13,6 +13,8 @@ class RegistrationAction extends IAction {
   }
 
   run = async (req, res) => {
+    this.checkRole(req.user.role);
+
     const { email, password, name, role, name_subject } = this.validate(req.body);
 
     const createdUser = await this.authService.registration(

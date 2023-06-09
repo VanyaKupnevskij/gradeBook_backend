@@ -17,6 +17,8 @@ class DeleteRecordAction extends IAction {
   }
 
   run = async (req, res) => {
+    this.checkRole(req.user.role);
+
     const { id } = this.validate(req.params);
 
     await this.service.deleteById(id);

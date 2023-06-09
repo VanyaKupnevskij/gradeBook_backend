@@ -29,8 +29,14 @@ class RecordRepository extends IRepository {
     return item;
   }
 
-  async getAll() {
-    const items = await Record.find();
+  async getAll(filters) {
+    let items = [];
+
+    if (filters) {
+      items = await Record.find(filters);
+    } else {
+      items = await Record.find();
+    }
 
     return items;
   }
