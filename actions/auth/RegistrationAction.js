@@ -12,6 +12,10 @@ class RegistrationAction extends IAction {
     this.authService = new AuthService(new UserRepository());
   }
 
+  get accessTag() {
+    return 'auth:registration';
+  }
+
   run = async (req, res) => {
     this.checkRole(req.user.role);
 

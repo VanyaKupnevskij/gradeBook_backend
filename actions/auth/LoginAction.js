@@ -11,6 +11,10 @@ class LoginAction extends IAction {
     this.authService = new AuthService(new UserRepository());
   }
 
+  get accessTag() {
+    return 'auth:login';
+  }
+
   run = async (req, res) => {
     const { email, password } = this.validate(req.body);
 

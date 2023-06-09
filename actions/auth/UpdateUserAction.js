@@ -13,6 +13,10 @@ class UpdateUserAction extends IAction {
     this.service = new AuthService(new UserRepository());
   }
 
+  get accessTag() {
+    return 'auth:update';
+  }
+
   run = async (req, res) => {
     this.checkRole(req.user.role);
 
