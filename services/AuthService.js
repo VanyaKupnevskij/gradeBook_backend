@@ -61,20 +61,20 @@ class AuthService extends BaseService {
     return updatedItem;
   };
 
-  getUsers = async () => {
+  getAll = async () => {
     const items = await this.repository.getAll();
 
     return items;
   };
 
-  deleteUserById = async (id) => {
+  deleteById = async (id) => {
     const isSeccessful = await this.repository.delete(id);
     if (!isSeccessful) {
       throw new AppError(ERROR_PRESETS.DELETE_ENTITY_BY_ID(id));
     }
   };
 
-  getUserById = async (id) => {
+  getById = async (id) => {
     const item = await this.repository.getById(id);
 
     return item;

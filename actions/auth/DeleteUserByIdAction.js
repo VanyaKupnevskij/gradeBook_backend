@@ -21,7 +21,7 @@ class DeleteUserByIdAction extends IAction {
 
     const { id } = this.validate(req.params);
 
-    await this.authService.deleteUserById(id);
+    await this.authService.deleteById(id);
 
     return res.json({ success: true, message: `Seccesful deleted user by id: ${id}` });
   };

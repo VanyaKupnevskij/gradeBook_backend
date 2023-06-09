@@ -20,6 +20,6 @@ router.get('/', auth, getAllRecordsAction.run);
 router.post('/create', auth, createRecordAction.run);
 router.get('/:id', auth, getRecordAction.run);
 router.delete('/:id', auth, deleteRecordAction.run);
-router.put('/update/:id', auth, updateRecordAction.run);
+router.put('/:id', auth, updateRecordAction.run);
 
 export default router;

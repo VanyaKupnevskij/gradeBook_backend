@@ -28,13 +28,19 @@ export const ROLES = {
   admin: 'admin',
 };
 
-const sharedPermissions = ['auth:login', 'auth:get-user-by-id', 'record:get-records'];
+const sharedPermissions = [
+  'auth:login',
+  'auth:get-by-id',
+  'record:get-records',
+  'record:get-by-id',
+];
 
-const editPermissions = ['record:create'];
+const editPermissions = ['record:create', 'record:update'];
 
 export const PERMISSIONS = {
   admin: [
     ...sharedPermissions,
+    ...editPermissions,
     'auth:delete',
     'auth:update',
     'auth:get-users',

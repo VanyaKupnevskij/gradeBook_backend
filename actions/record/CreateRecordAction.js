@@ -13,17 +13,24 @@ class CreateRecordAction extends IAction {
   }
 
   get accessTag() {
-    return 'record:get-records';
+    return 'record:create';
   }
 
   run = async (req, res) => {
     this.checkRole(req.user.role);
 
-    let validData = this.validate({ ...req.body, owner_id: req.user.id });
+    let validData = this.validate({ ...req.body });
 
     const createdItem = await this.service.create(validData);
 
-    return res.status(STATUS.created).json({ ...createdItem });
+    return res.status(STATUS.created).json({
+      from: createdItem.from,
+      to: createdItem.to,
+      date: createdItem.date,
+      status: createdItem.status,
+      comment: createdItem.comment,
+      mark: createdItem.mark,
+    });
   };
 
   validate(input) {

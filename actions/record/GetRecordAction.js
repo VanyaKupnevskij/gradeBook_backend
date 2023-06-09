@@ -12,12 +12,23 @@ class GetRecordAction extends IAction {
     this.service = new RecordService(new RecordRepository());
   }
 
+  get accessTag() {
+    return 'record:get-by-id';
+  }
+
   run = async (req, res) => {
     const { id } = this.validate(req.params);
 
     const item = await this.service.getById(id);
 
-    return res.json({ ...item });
+    return res.json({
+      from: item.from,
+      to: item.to,
+      date: item.date,
+      status: item.status,
+      comment: item.comment,
+      mark: item.mark,
+    });
   };
 
   validate(input) {

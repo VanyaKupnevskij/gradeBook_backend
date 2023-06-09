@@ -1,76 +1,46 @@
 import IRepository from './IRepository.js';
 
+import Record from '../models/Record.js';
+
 class RecordRepository extends IRepository {
   constructor() {
     super();
   }
 
   async insert(newData) {
-    await connection.query(createQuery, [
-      newData.id,
-      newData.projects_id,
-      newData.owner_id,
-      newData.date,
-      newData.money_account,
-      newData.comment,
-      newData.source_from,
+    await newData.save();
 
-      newData.income.id,
-      newData.income.price,
-
-      newData.costs.id,
-      newData.costs.workers_id,
-      newData.costs.price,
-      newData.costs.already_paid,
-    ]);
-
-    return this.getById(newData.id);
+    return this.getById(newData._id);
   }
 
-  async update(newData) {
-    await connection.query(updateQuery, [
-      newData.date,
-      newData.money_account,
-      newData.comment,
-      newData.source_from,
+  async update(id, newData) {
+    const item = await Record.findOneAndUpdate({ _id: id }, newData, {
+      new: true,
+    });
 
-      newData.income.price,
-
-      newData.costs.workers_id,
-      newData.costs.price,
-      newData.costs.already_paid,
-
-      newData.id,
-      newData.id,
-      newData.id,
-    ]);
-
-    return this.getById(newData.id);
+    return item;
   }
 
   async getById(id) {
-    const items = await connection.query(getQuery, [id]);
+    const item = await Record.findById(id);
 
-    return items[0][1][0];
+    if (!item) throw new AppError(ERROR_PRESETS.ENTITY_ID_NOT_EXIST(id));
+
+    return item;
   }
 
-  async getAll(start_date, end_date, owner_id, projects_id) {
-    const items = await connection.query(getAllQuery, [
-      start_date,
-      end_date,
-      owner_id,
-      projects_id,
-    ]);
+  async getAll() {
+    const items = await Record.find();
 
-    return items[0][3];
+    return items;
   }
 
   async delete(id) {
-    const user = await this.getById(id);
+    const item = await this.getById(id);
 
-    if (!user) return false;
+    if (!item) return false;
 
-    await User.deleteOne({ _id: id });
+    await Record.deleteOne({ _id: id });
 
     return true;
   }

@@ -13,12 +13,23 @@ class UpdateRecordAction extends IAction {
     this.service = new RecordService(new RecordRepository());
   }
 
+  get accessTag() {
+    return 'record:update';
+  }
+
   run = async (req, res) => {
-    let validData = this.validate({ ...req.body, owner_id: req.user.id, id: req.params.id });
+    let validData = this.validate({ ...req.body, id: req.params.id });
 
     const updatedItem = await this.service.update(validData);
 
-    return res.status(STATUS.updated).json({ ...updatedItem });
+    return res.status(STATUS.updated).json({
+      from: updatedItem.from,
+      to: updatedItem.to,
+      date: updatedItem.date,
+      status: updatedItem.status,
+      comment: updatedItem.comment,
+      mark: updatedItem.mark,
+    });
   };
 
   validate(input) {

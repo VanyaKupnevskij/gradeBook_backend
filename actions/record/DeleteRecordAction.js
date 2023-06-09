@@ -12,6 +12,10 @@ class DeleteRecordAction extends IAction {
     this.service = new RecordService(new RecordRepository());
   }
 
+  get accessTag() {
+    return 'record:delete';
+  }
+
   run = async (req, res) => {
     const { id } = this.validate(req.params);
 

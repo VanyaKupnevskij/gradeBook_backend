@@ -13,7 +13,7 @@ class GetUserByIdAction extends IAction {
   }
 
   get accessTag() {
-    return 'auth:get-user-by-id';
+    return 'auth:get-by-id';
   }
 
   run = async (req, res) => {
@@ -21,7 +21,7 @@ class GetUserByIdAction extends IAction {
 
     const { id } = this.validate(req.params);
 
-    const findedUser = await this.authService.getUserById(id);
+    const findedUser = await this.authService.getById(id);
 
     return res.json({
       id: findedUser.id,

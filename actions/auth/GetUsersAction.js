@@ -17,7 +17,7 @@ class GetUsersAction extends IAction {
   run = async (req, res) => {
     this.checkRole(req.user.role);
 
-    const users = await this.authService.getUsers();
+    const users = await this.authService.getAll();
 
     return res.json(users);
   };

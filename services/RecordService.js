@@ -8,13 +8,14 @@ class RecordService extends BaseService {
   }
 
   create = async (itemData) => {
-    let item = new Record();
-    item.projects_id = itemData.projects_id;
-    item.owner_id = itemData.owner_id;
-    item.date = itemData.date ?? new Date(Date.now());
-    item.money_account = itemData.money_account;
-    item.comment = itemData.comment ?? '';
-    item.source_from = itemData.source_from;
+    let item = new Record({
+      from: itemData.from,
+      to: itemData.to,
+      date: itemData.date,
+      status: itemData.status,
+      comment: itemData.comment,
+      mark: itemData.mark,
+    });
 
     const createdItem = await this.repository.insert(item);
 
@@ -22,29 +23,24 @@ class RecordService extends BaseService {
   };
 
   update = async (itemData) => {
-    let item = new Record(itemData.id);
-    item.projects_id = itemData.projects_id;
-    item.owner_id = itemData.owner_id;
-    item.date = itemData.date ?? new Date(Date.now());
-    item.money_account = itemData.money_account;
-    item.comment = itemData.comment ?? '';
-    item.source_from = itemData.source_from;
+    let item = {
+      from: itemData.from,
+      to: itemData.to,
+      date: itemData.date,
+      status: itemData.status,
+      comment: itemData.comment,
+      mark: itemData.mark,
+    };
 
-    const updatedItem = await this.repository.update(item);
+    const updatedItem = await this.repository.update(itemData.id, item);
 
     return updatedItem;
   };
 
-  getAll = async ({ start_date, end_date, owner_id, projects_id }) => {
-    const items = await this.repository.getAll(start_date, end_date, owner_id, projects_id);
+  getAll = async () => {
+    const items = await this.repository.getAll();
 
     return items;
-  };
-
-  getById = async (id) => {
-    const item = await this.repository.getById(id);
-
-    return item;
   };
 
   deleteById = async (id) => {
@@ -52,6 +48,12 @@ class RecordService extends BaseService {
     if (!isSeccessful) {
       throw new AppError(ERROR_PRESETS.DELETE_ENTITY_BY_ID(id));
     }
+  };
+
+  getById = async (id) => {
+    const item = await this.repository.getById(id);
+
+    return item;
   };
 }
 
