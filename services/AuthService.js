@@ -5,24 +5,21 @@ import bcrypt from 'bcryptjs';
 import { STRENGTH_BCRYCT } from '../config/enums.js';
 import AppError, { ERROR_PRESETS } from '../errors/AppError.js';
 import BaseService from './BaseService.js';
-import UserEntity from '../entities/UserEntity.js';
+import User from '../models/User.js';
 
 class AuthService extends BaseService {
   constructor(repository) {
     super(repository);
   }
 
-  registration = async (name, email, password) => {
-    const findedUser = (await this.repository.findByEmail(email))[0];
+  registration = async (name, email, password, role, name_subject) => {
+    const findedUser = await this.repository.findByEmail(email);
     if (findedUser) {
       throw new AppError(ERROR_PRESETS.REGISTRATION(email));
     }
 
     const hashedPassword = await bcrypt.hash(password, STRENGTH_BCRYCT);
-    let user = new UserEntity();
-    user.name = name;
-    user.email = email;
-    user.password = hashedPassword;
+    let user = new User({ name, email, role, name_subject, password: hashedPassword });
 
     const createdUser = await this.repository.insert(user);
 
@@ -30,7 +27,7 @@ class AuthService extends BaseService {
   };
 
   login = async (email, password) => {
-    const findedUser = (await this.repository.findByEmail(email))[0];
+    const findedUser = await this.repository.findByEmail(email);
     if (!findedUser) {
       throw new AppError(ERROR_PRESETS.AUTHORIZATION);
     }
@@ -42,7 +39,13 @@ class AuthService extends BaseService {
 
     const token = jwt.sign({ id: findedUser.id }, config.get('jwtSecret'));
 
-    return { token, name: findedUser.name, email: findedUser.email };
+    return {
+      token,
+      name: findedUser.name,
+      email: findedUser.email,
+      role: findedUser.role,
+      name_subject: findedUser.name_subject,
+    };
   };
 }
 

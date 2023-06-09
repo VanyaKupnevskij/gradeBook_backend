@@ -13,17 +13,27 @@ class RegistrationAction extends IAction {
   }
 
   run = async (req, res) => {
-    const { email, password, name } = this.validate(req.body);
+    const { email, password, name, role, name_subject } = this.validate(req.body);
 
-    const createdUser = await this.authService.registration(name, email, password);
+    const createdUser = await this.authService.registration(
+      name,
+      email,
+      password,
+      role,
+      name_subject,
+    );
 
-    return res
-      .status(STATUS.created)
-      .json({ id: createdUser.id, email: createdUser.email, name: createdUser.name });
+    return res.status(STATUS.created).json({
+      id: createdUser.id,
+      email: createdUser.email,
+      name: createdUser.name,
+      role: createdUser.role,
+      name_subject: createdUser.name_subject,
+    });
   };
 
   validate(input) {
-    const { email, password, name } = input;
+    const { email, password, name, role, name_subject } = input;
 
     const regexEmail = /^([a-z0-9]+(?:[._-][a-z0-9]+)*)@([a-z0-9]+(?:[.-][a-z0-9]+)*\.[a-z]{2,})$/i;
 
@@ -58,7 +68,7 @@ class RegistrationAction extends IAction {
       }
     }
 
-    return { email, password, name };
+    return { email, password, name, role, name_subject };
   }
 }
 

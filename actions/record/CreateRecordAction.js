@@ -21,29 +21,11 @@ class CreateRecordAction extends IAction {
   };
 
   validate(input) {
-    if (!input.projects_id) {
-      throw new AppError(
-        ERROR_PRESETS.INVALID_INPUT('Projects_id', input.projects_id, 'must exist'),
-      );
+    if (!input.from) {
+      throw new AppError(ERROR_PRESETS.INVALID_INPUT('From', input.from, 'must exist'));
     }
-    if (!input.owner_id) {
-      throw new AppError(ERROR_PRESETS.INVALID_INPUT('Owner_id', input.owner_id, 'must exist'));
-    }
-    if (!input.money_account) {
-      throw new AppError(
-        ERROR_PRESETS.INVALID_INPUT('Money_account', input.money_account, 'must exist'),
-      );
-    }
-    if (!input.source_from) {
-      throw new AppError(
-        ERROR_PRESETS.INVALID_INPUT('Source_from', input.source_from, 'must exist'),
-      );
-    }
-    if (!input.income) {
-      throw new AppError(ERROR_PRESETS.INVALID_INPUT('Income', input.income, 'must exist'));
-    }
-    if (!input.costs) {
-      throw new AppError(ERROR_PRESETS.INVALID_INPUT('Costs', input.costs, 'must exist'));
+    if (!input.to) {
+      throw new AppError(ERROR_PRESETS.INVALID_INPUT('To', input.to, 'must exist'));
     }
 
     return input;

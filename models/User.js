@@ -1,4 +1,4 @@
-const { Schema, model, Types } = require('mongoose');
+import { Schema, model, Types } from 'mongoose';
 
 const schema = new Schema({
   name: { type: String },
@@ -9,4 +9,4 @@ const schema = new Schema({
   students: [{ type: String }],
 });
 
-module.exports = model('User', schema);
+export default model('User', schema);

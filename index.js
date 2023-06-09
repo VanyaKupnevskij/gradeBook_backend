@@ -1,15 +1,15 @@
-require('express-async-errors');
-const express = require('express');
+import express from 'express';
+import 'express-async-errors';
 
-const recordRouter = require('./routers/record.route.js');
-const authRouter = require('./routers/auth.route.js');
+import recordRouter from './routers/record.route.js';
+import authRouter from './routers/auth.route.js';
 
-const cors = require('./middlewares/cors.middleware.js');
-const error = require('./middlewares/error.middleware.js');
-const config = require('config');
-const path = require('path');
+import cors from './middlewares/cors.middleware.js';
+import error from './middlewares/error.middleware.js';
+import config from 'config';
+import * as path from 'path';
 
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const app = express();
 

@@ -1,13 +1,5 @@
 import IRepository from './IRepository.js';
 
-import { pool as connection } from '../config/database.mysql.js';
-import loadQuery from '../queries/loadQuery.js';
-
-const createQuery = loadQuery('records/create');
-const getAllQuery = loadQuery('records/getAll');
-const getQuery = loadQuery('records/get');
-const updateQuery = loadQuery('records/update');
-
 class RecordRepository extends IRepository {
   constructor() {
     super();

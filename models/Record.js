@@ -1,4 +1,4 @@
-const { Schema, model, Types } = require('mongoose');
+import { Schema, model, Types } from 'mongoose';
 
 const schema = new Schema({
   from: { type: Types.ObjectId, ref: 'User' },
@@ -9,4 +9,4 @@ const schema = new Schema({
   mark: { type: Number, default: 0 },
 });
 
-module.exports = model('Record', schema);
+export default model('Record', schema);

@@ -12,7 +12,7 @@ class LoginAction extends IAction {
   }
 
   run = async (req, res) => {
-    const { name, email, password } = this.validate(req.body);
+    const { email, password } = this.validate(req.body);
 
     const userData = await this.authService.login(email, password);
 
@@ -20,7 +20,7 @@ class LoginAction extends IAction {
   };
 
   validate(input) {
-    const { name, email, password } = input;
+    const { email, password } = input;
 
     const regexEmail = /^([a-z0-9]+(?:[._-][a-z0-9]+)*)@([a-z0-9]+(?:[.-][a-z0-9]+)*\.[a-z]{2,})$/i;
 
@@ -52,7 +52,7 @@ class LoginAction extends IAction {
       }
     }
 
-    return { name, email, password };
+    return { email, password };
   }
 }
 
