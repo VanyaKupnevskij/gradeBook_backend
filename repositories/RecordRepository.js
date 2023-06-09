@@ -66,9 +66,13 @@ class RecordRepository extends IRepository {
   }
 
   async delete(id) {
-    const result = await connection.query('DELETE FROM records WHERE id = ?', [id]);
+    const user = await this.getById(id);
 
-    return result[0].affectedRows > 0;
+    if (!user) return false;
+
+    await User.deleteOne({ _id: id });
+
+    return true;
   }
 }
 

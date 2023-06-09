@@ -37,7 +37,7 @@ class AuthService extends BaseService {
       throw new AppError(ERROR_PRESETS.AUTHORIZATION);
     }
 
-    const token = jwt.sign({ id: findedUser.id }, config.get('jwtSecret'));
+    const token = jwt.sign({ id: findedUser.id, role: findedUser.role }, config.get('jwtSecret'));
 
     return {
       token,
@@ -46,6 +46,38 @@ class AuthService extends BaseService {
       role: findedUser.role,
       name_subject: findedUser.name_subject,
     };
+  };
+
+  update = async (itemData) => {
+    let item = {
+      name: itemData.name,
+      role: itemData.role,
+      name_subject: itemData.name_subject,
+      students: itemData.students,
+    };
+
+    const updatedItem = await this.repository.update(itemData.id, item);
+
+    return updatedItem;
+  };
+
+  getUsers = async () => {
+    const items = await this.repository.getAll();
+
+    return items;
+  };
+
+  deleteUserById = async (id) => {
+    const isSeccessful = await this.repository.delete(id);
+    if (!isSeccessful) {
+      throw new AppError(ERROR_PRESETS.DELETE_ENTITY_BY_ID(id));
+    }
+  };
+
+  getUserById = async (id) => {
+    const item = await this.repository.getById(id);
+
+    return item;
   };
 }
 

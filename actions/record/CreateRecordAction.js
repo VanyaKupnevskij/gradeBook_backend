@@ -12,7 +12,13 @@ class CreateRecordAction extends IAction {
     this.service = new RecordService(new RecordRepository());
   }
 
+  get accessTag() {
+    return 'record:get-records';
+  }
+
   run = async (req, res) => {
+    this.checkRole(req.user.role);
+
     let validData = this.validate({ ...req.body, owner_id: req.user.id });
 
     const createdItem = await this.service.create(validData);

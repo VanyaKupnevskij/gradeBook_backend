@@ -21,3 +21,26 @@ export const LAYER = {
 };
 
 export const STRENGTH_BCRYCT = 12;
+
+export const ROLES = {
+  teacher: 'teacher',
+  student: 'student',
+  admin: 'admin',
+};
+
+const sharedPermissions = ['auth:login', 'auth:get-user-by-id', 'record:get-records'];
+
+const editPermissions = ['record:create'];
+
+export const PERMISSIONS = {
+  admin: [
+    ...sharedPermissions,
+    'auth:delete',
+    'auth:update',
+    'auth:get-users',
+    'auth:registration',
+    'record:delete',
+  ],
+  teacher: [...sharedPermissions, ...editPermissions],
+  student: [...sharedPermissions],
+};

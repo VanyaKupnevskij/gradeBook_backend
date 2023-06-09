@@ -13,7 +13,7 @@ class DeleteUserByIdAction extends IAction {
   }
 
   get accessTag() {
-    return 'auth:delete-user-by-id';
+    return 'auth:delete';
   }
 
   run = async (req, res) => {

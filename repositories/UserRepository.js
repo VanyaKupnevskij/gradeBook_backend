@@ -8,13 +8,19 @@ class UserRepository extends IRepository {
     super();
   }
 
-  async insert(newUser) {
-    await newUser.save();
+  async insert(newData) {
+    await newData.save();
 
-    return this.getById(newUser._id);
+    return this.getById(newData._id);
   }
 
-  async update(id, newUser) {}
+  async update(id, newData) {
+    const user = await User.findOneAndUpdate({ _id: id }, newData, {
+      new: true,
+    });
+
+    return user;
+  }
 
   async getById(id) {
     const user = await User.findById(id);
@@ -25,10 +31,24 @@ class UserRepository extends IRepository {
   }
 
   async getAll() {
-    return await User.find();
+    const users = await User.find();
+
+    for (let user of users) {
+      user.password = null;
+    }
+
+    return users;
   }
 
-  async delete(id) {}
+  async delete(id) {
+    const user = await this.getById(id);
+
+    if (!user) return false;
+
+    await User.deleteOne({ _id: id });
+
+    return true;
+  }
 
   async findByEmail(email) {
     return await User.findOne({ email });

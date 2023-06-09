@@ -21,9 +21,16 @@ class GetUserByIdAction extends IAction {
 
     const { id } = this.validate(req.params);
 
-    const user = await this.authService.getUserById(id);
+    const findedUser = await this.authService.getUserById(id);
 
-    return res.json({ id: user.id, email: user.email });
+    return res.json({
+      id: findedUser.id,
+      email: findedUser.email,
+      name: findedUser.name,
+      role: findedUser.role,
+      name_subject: findedUser.name_subject,
+      students: findedUser.students,
+    });
   };
 
   validate(input) {
