@@ -1,0 +1,6 @@
+{
+  "port": 80,
+  "jwtSecret": "grade book service site secret_jwt",
+  "baseUrl": "http://localhost",
+  "mongoUri": "mongodb+srv://VanOk:VanOk1251007@cluster0.fd5ravn.mongodb.net/app?retryWrites=true&w=majority"
+}
