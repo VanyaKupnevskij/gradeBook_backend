@@ -19,7 +19,7 @@ class GetUserByIdAction extends IAction {
   run = async (req, res) => {
     this.checkRole(req.user.role);
 
-    const { id } = this.validate(req.params);
+    const { id } = this.validate({ id: req.params.id === 'self' ? req.user.id : req.params.id });
 
     const findedUser = await this.authService.getById(id);
 
@@ -40,7 +40,7 @@ class GetUserByIdAction extends IAction {
       throw new AppError(ERROR_PRESETS.INVALID_INPUT('Id', id, 'is invalid'));
     }
 
-    return { id };
+    return input;
   }
 }
 
