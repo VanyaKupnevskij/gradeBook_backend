@@ -18,7 +18,7 @@ const getUserByIdAction = new GetUserByIdAction();
 const updateUserAction = new UpdateUserAction();
 const deleteUserByIdAction = new DeleteUserByIdAction();
 
-authRouter.post('/registration', registrationAction.run);
+authRouter.post('/registration', auth, registrationAction.run);
 authRouter.post('/login', loginAction.run);
 authRouter.get('/', auth, getUsersAction.run);
 authRouter.get('/:id', auth, getUserByIdAction.run);

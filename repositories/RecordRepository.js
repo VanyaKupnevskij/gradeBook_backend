@@ -33,9 +33,9 @@ class RecordRepository extends IRepository {
     let items = [];
 
     if (filters) {
-      items = await Record.find(filters);
+      items = await Record.find(filters).populate(['from', 'to']).exec();
     } else {
-      items = await Record.find();
+      items = await Record.find().populate(['from', 'to']).exec();
     }
 
     return items;
