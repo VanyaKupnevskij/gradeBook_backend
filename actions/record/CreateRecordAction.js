@@ -19,7 +19,10 @@ class CreateRecordAction extends IAction {
   run = async (req, res) => {
     this.checkRole(req.user.role);
 
-    let validData = this.validate({ ...req.body });
+    let validData = this.validate({
+      ...req.body,
+      from: req.body.from ? req.body.from : req.user.id,
+    });
 
     const createdItem = await this.service.create(validData);
 

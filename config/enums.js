@@ -35,7 +35,7 @@ const sharedPermissions = [
   'record:get-by-id',
 ];
 
-const editPermissions = ['record:create', 'record:update'];
+const editPermissions = ['record:create', 'record:update', 'record:delete'];
 
 export const PERMISSIONS = {
   admin: [
@@ -45,7 +45,6 @@ export const PERMISSIONS = {
     'auth:update',
     'auth:get-users',
     'auth:registration',
-    'record:delete',
   ],
   teacher: [...sharedPermissions, ...editPermissions],
   student: [...sharedPermissions],
